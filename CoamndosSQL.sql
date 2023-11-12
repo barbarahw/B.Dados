@@ -191,3 +191,23 @@ WHERE F.IDDepartamento = 104 AND E.Cidade = 'Curitiba';
 -- numero 5 --
 SELECT Nome, DataAdmissao FROM funcionario 
 WHERE YEAR(DataAdmissao) > 2020;
+
+-- numero 12 --
+SELECT D.Nome, D.Sigla, COUNT(*) AS totalCursos
+FROM departamento AS D, curso AS C
+WHERE C.IDDepartamento = D.IDDepartamento
+GROUP BY D.Nome, D.Sigla
+HAVING COUNT(*) = (
+    SELECT MAX(numCursos)
+    FROM (
+        SELECT COUNT(*) AS numCursos
+        FROM curso
+        GROUP BY IDDepartamento
+    ) AS t
+);
+
+-- numero 16 --
+SHOW CREATE TABLE alocacao;
+
+-- numero 20 --
+CREATE INDEX IDX_departamento ON departamento (Sigla);
